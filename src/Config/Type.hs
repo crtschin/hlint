@@ -10,7 +10,7 @@ module Config.Type(
     Severity(..), Classify(..), HintRule(..), Note(..), Setting(..),
     Restrict(..), RestrictType(..), RestrictIdents(..), SmellType(..),
     RestrictImportStyle(..), QualifiedStyle(..), RestrictTypeApp(..),
-    defaultHintName, isUnifyVar, showNotes, getSeverity, getRestrictType, getSmellType
+    defaultHintName, isUnifyVar, showNotes, getSeverity, getRestrictType, getSmellType, showSmellType
     ) where
 
 import Data.Char
@@ -173,15 +173,17 @@ data Restrict = Restrict
     } deriving Show
 
 data SmellType = SmellLongFunctions | SmellLongTypeLists | SmellManyArgFunctions | SmellManyImports | SmellManyExplicitImports
-  deriving (Show,Eq,Ord)
+  deriving (Show,Eq,Ord,Enum,Bounded)
 
 getSmellType :: String -> Maybe SmellType
-getSmellType "long functions" = Just SmellLongFunctions
-getSmellType "long type lists" = Just SmellLongTypeLists
-getSmellType "many arg functions" = Just SmellManyArgFunctions
-getSmellType "many imports" = Just SmellManyImports
-getSmellType "many explicit imports" = Just SmellManyExplicitImports
-getSmellType _ = Nothing
+getSmellType s = find ((== s) . showSmellType) [minBound .. maxBound]
+
+showSmellType :: SmellType -> String
+showSmellType SmellLongFunctions = "long functions"
+showSmellType SmellLongTypeLists = "long type lists"
+showSmellType SmellManyArgFunctions = "many arg functions"
+showSmellType SmellManyImports = "many imports"
+showSmellType SmellManyExplicitImports = "many explicit imports"
 
 data Setting
     = SettingClassify Classify

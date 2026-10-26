@@ -16343,3 +16343,63 @@ x
 <td>Warning</td>
 </tr>
 </table>
+
+## Smells
+
+Smells are off by default. To turn one on, add a `smell` entry with a `limit` to `.hlint.yaml`.
+
+<table>
+<tr>
+<th>Hint Name</th>
+<th>Configuration</th>
+<th>Example</th>
+</tr>
+<tr>
+<td>Many arg function</td>
+<td><code>- smell: {type: many arg functions, limit: 2}</code></td>
+<td>
+<pre>
+f :: Int -> Int -> Int 
+f = undefined
+</pre>
+</td>
+</tr>
+<tr>
+<td>Long function</td>
+<td><code>- smell: {type: long functions, limit: 3}</code></td>
+<td>
+<pre>
+f = do 
+ x <- y 
+ return x
+</pre>
+</td>
+</tr>
+<tr>
+<td>Long type list</td>
+<td><code>- smell: {type: long type lists, limit: 2}</code></td>
+<td>
+<pre>
+f :: Bool -> Int -> (Int -> Proxy '[a, b])
+</pre>
+</td>
+</tr>
+<tr>
+<td>Many imports</td>
+<td><code>- smell: {type: many imports, limit: 2}</code></td>
+<td>
+<pre>
+import A; import B
+</pre>
+</td>
+</tr>
+<tr>
+<td>Too many explicit imports</td>
+<td><code>- smell: {type: many explicit imports, limit: 2}</code></td>
+<td>
+<pre>
+import A (x, y, z)
+</pre>
+</td>
+</tr>
+</table>

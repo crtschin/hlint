@@ -1,6 +1,6 @@
 {-# LANGUAGE ImportQualifiedPost #-}
 
-module Apply(applyHints, applyHintFile, applyHintFiles) where
+module Apply(applyHints, applyHintsReal, applyHintFile, applyHintFiles) where
 
 import Control.Applicative
 import Data.Monoid
